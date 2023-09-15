@@ -36,9 +36,14 @@ function App() {
   // useEffect hook to update filteredSongs based on search term
   useEffect(() => {
     // Filter the songs based on search term
-    const results = songs.filter((song) =>
-      song.title.toLowerCase().includes(searchTerm.toLowerCase())
+    const results = songs.filter(
+      (song) =>
+        song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        song.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        song.album.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        song.genre.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
     // Update the state with filtered songs
     setFilteredSongs(results);
   }, [searchTerm, songs]); // Re-run when searchTerm or songs change
