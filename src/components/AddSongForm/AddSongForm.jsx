@@ -1,77 +1,70 @@
-import React, { useState } from "react";
-import axios from "axios";
-import "./AddSongForm.css";
+import React, { useState, useEffect } from "react";
 
-function AddSongForm() {
-  const [title, setTitle] = useState("");
-  const [artist, setArtist] = useState("");
-  const [album, setAlbum] = useState("");
-  const [releaseDate, setReleaseDate] = useState("");
-  const [genre, setGenre] = useState("");
+const defaultSongState = {
+  title: "",
+  artist: "",
+  album: "",
+  releaseDate: "",
+  genre: "",
+};
+
+function AddSongForm({ addSong }) {
+  const [song, setSong] = useState(defaultSongState);
+
+  useEffect(() => {
+    setSong(defaultSongState);
+  }, []);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setSong((prevSong) => ({
+      ...prevSong,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!song.title || !song.artist) return; // Basic validation
 
-    const songData = {
-      title: title,
-      artist: artist,
-      album: album,
-      releaseDate: releaseDate,
-      genre: genre,
-    };
-
-    axios
-      .post("https://localhost:7196/api/Songs", songData)
-      .then(() => {
-        // Clear the form after a successful submission
-        setTitle("");
-        setArtist("");
-        setAlbum("");
-        setReleaseDate("");
-        setGenre("");
-      })
-      .catch((error) => {
-        console.error("Error adding song:", error);
-      });
+    addSong(song);
+    setSong(defaultSongState);
   };
 
   return (
-    <div className="add-song-form">
-      <h2>Add New Song</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Artist"
-          value={artist}
-          onChange={(e) => setArtist(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Album"
-          value={album}
-          onChange={(e) => setAlbum(e.target.value)}
-        />
-        <input
-          type="date"
-          placeholder="Release Date"
-          value={releaseDate}
-          onChange={(e) => setReleaseDate(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Genre"
-          value={genre}
-          onChange={(e) => setGenre(e.target.value)}
-        />
-        <button type="submit">Add Song</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        name="title"
+        value={song.title}
+        onChange={handleChange}
+        placeholder="Title"
+      />
+      <input
+        name="artist"
+        value={song.artist}
+        onChange={handleChange}
+        placeholder="Artist"
+      />
+      <input
+        name="album"
+        value={song.album}
+        onChange={handleChange}
+        placeholder="Album"
+      />
+      <input
+        name="releaseDate"
+        value={song.releaseDate}
+        onChange={handleChange}
+        placeholder="Release Date"
+      />
+      <input
+        name="genre"
+        value={song.genre}
+        onChange={handleChange}
+        placeholder="Genre"
+      />
+      <button type="submit">Add Song</button>
+    </form>
   );
 }
 

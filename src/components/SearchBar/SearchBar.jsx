@@ -3,11 +3,11 @@ import "./SearchBar.css";
 
 function SearchBar({ setSearchTerm }) {
   return (
-    <div>
+    <div className="search-bar">
       <input
         type="text"
-        placeholder="Search songs..."
-        onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
+        placeholder="Search..."
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
     </div>
   );
