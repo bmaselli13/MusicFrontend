@@ -1,7 +1,8 @@
 import React from "react";
+import "./Header.css";
 
 function Header() {
-  return <h1>My Music App</h1>;
+  return <h1 className="header">My Music App</h1>;
 }
 
 export default Header;

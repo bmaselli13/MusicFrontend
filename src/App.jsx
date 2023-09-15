@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Header from "./components/Header/Header";
 import SearchBar from "./components/SearchBar/SearchBar";
-import MusicTable from "./components/MusicTable/MusicTable";
 import AddSongForm from "./components/AddSongForm/AddSongForm";
+import SongList from "./components/SongList/SongList";
+import "./App.css";
 import axios from "axios";
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
   useEffect(() => {
     // Fetch songs from API
     axios
-      .get("http://localhost:7196/api/Songs")
+      .get("https://localhost:7196/api/Songs")
       .then((response) => {
         setSongs(response.data);
         setFilteredSongs(response.data);
@@ -38,7 +39,7 @@ function App() {
   const addSong = (newSong) => {
     // Add the song to the backend
     axios
-      .post("http://localhost:7196/api/Songs", newSong)
+      .post("https://localhost:7196/api/Songs", newSong)
       .then((response) => {
         setSongs([...songs, response.data]);
       })
@@ -47,23 +48,11 @@ function App() {
       });
   };
 
-  const deleteSong = (songId) => {
-    // Delete the song
-    axios
-      .delete(`http://localhost:7196/api/Songs/${songId}`)
-      .then(() => {
-        setSongs(songs.filter((song) => song.id !== songId));
-      })
-      .catch((error) => {
-        console.error("Error deleting song:", error);
-      });
-  };
-
   return (
     <div className="app">
       <Header />
       <SearchBar setSearchTerm={setSearchTerm} />
-      <MusicTable songs={filteredSongs} deleteSong={deleteSong} />
+      <SongList songs={filteredSongs} />
       <AddSongForm addSong={addSong} />
     </div>
   );
