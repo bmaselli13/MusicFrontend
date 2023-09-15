@@ -37,7 +37,6 @@ function App() {
   }, [searchTerm, songs]);
 
   const addSong = (newSong) => {
-    // Add the song to the backend
     axios
       .post("https://localhost:7196/api/Songs", newSong)
       .then((response) => {
@@ -48,11 +47,41 @@ function App() {
       });
   };
 
+  const deleteSong = (songId) => {
+    axios
+      .delete(`https://localhost:7196/api/Songs/${songId}`)
+      .then(() => {
+        setSongs((prevSongs) => prevSongs.filter((song) => song.id !== songId));
+      })
+      .catch((error) => {
+        console.error("Error deleting song:", error);
+      });
+  };
+
+  const updateSong = (updatedSong) => {
+    axios
+      .put(`https://localhost:7196/api/Songs/${updatedSong.id}`, updatedSong)
+      .then((response) => {
+        setSongs((prevSongs) =>
+          prevSongs.map((song) =>
+            song.id === updatedSong.id ? updatedSong : song
+          )
+        );
+      })
+      .catch((error) => {
+        console.error("Error updating song:", error);
+      });
+  };
+
   return (
     <div className="app">
       <Header />
       <SearchBar setSearchTerm={setSearchTerm} />
-      <SongList songs={filteredSongs} />
+      <SongList
+        songs={filteredSongs}
+        onDelete={deleteSong}
+        onEdit={updateSong}
+      />{" "}
       <AddSongForm addSong={addSong} />
     </div>
   );

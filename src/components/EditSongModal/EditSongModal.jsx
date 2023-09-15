@@ -51,9 +51,10 @@ function EditSongModal({ song, onUpdate, onClose }) {
             value={releaseDate}
             onChange={(e) => setReleaseDate(e.target.value)}
           />
-          <select value={genre} onChange={(e) => setGenre(e.target.value)}>
-            {/* Add your genre options here */}
-          </select>
+          <select
+            value={genre}
+            onChange={(e) => setGenre(e.target.value)}
+          ></select>
           <button type="submit">Update Song</button>
         </form>
       </div>
