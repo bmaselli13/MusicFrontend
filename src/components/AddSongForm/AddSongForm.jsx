@@ -25,7 +25,7 @@ function AddSongForm({ addSong }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!song.title || !song.artist) return; // Basic validation
+    if (!song.title || !song.artist) return;
 
     addSong(song);
     setSong(defaultSongState);

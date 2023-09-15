@@ -20,7 +20,7 @@ function SongList({ songs, onDelete, onEdit }) {
             <td>{song.title}</td>
             <td>{song.artist}</td>
             <td>{song.album}</td>
-            <td>{song.releaseDate.split("T")[0]}</td> {/* Updated this line */}
+            <td>{song.releaseDate.split("T")[0]}</td>
             <td>{song.genre}</td>
             <td>
               <button onClick={() => onEdit(song)}>Edit</button>
